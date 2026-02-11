@@ -11,7 +11,7 @@ describe("dogService.ts tests", () => {
       status: "success"
     }
 
-    console.log(jsonResponse)
+    //console.log(jsonResponse)
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
       ok: true,
@@ -19,7 +19,7 @@ describe("dogService.ts tests", () => {
     } as Response)
 
     const result = await getRandomDogImage()
-    console.log(result, "!!!!!!!!!!!!!!!")
+    //console.log(result, "!!!!!!!!!!!!!!!")
 
     expect(fetchSpy).toHaveBeenCalledExactlyOnceWith("https://dog.ceo/api/breeds/image/random")
     expect(result).toEqual({
@@ -27,6 +27,21 @@ describe("dogService.ts tests", () => {
       status: "success"
     }
     )
+  })
 
+  test.fails("fail to call API", async ()=> {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      ok: true,
+      status: 500
+    } as Response)
+
+    const result = await getRandomDogImage()
+    console.log(result, "!!!!!!!!!!!!!!!")
+
+    expect(fetchSpy).toHaveBeenCalledExactlyOnceWith("https://dog.ceo/api/breeds/image/random")
+    expect(result).toEqual({
+      ok: "false",
+      status: 500
+    })
   })
 })
