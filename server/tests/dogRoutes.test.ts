@@ -38,4 +38,26 @@ describe("dogRoutes tests", () => {
         expect(res.body.success).toEqual(true)
         expect(res.body.data.message).toEqual("https://images.dog.ceo/breeds/mudhol-indian/Indian-Mudhol.jpg")
     })
+
+    test.fails("Failed GET call to /api/dogs/random", async () => {
+        const jsonReturned = {
+            success: false,
+            error: "Failed to fetch dog image: Network error"
+        }
+
+        vi.mocked(dogController.getDogImage).mockImplementation(
+            async (_req, res) => {
+                res.status(200).json(jsonReturned)
+            }
+        )
+
+        const res = await request(app)
+            .get("/api/dogs/random")
+
+        console.log(res.body)
+
+        expect(res.status).toBe(500)
+        expect(res.body.success).toEqual(false)
+        expect(res.body.error).toEqual("Failed to fetch dog image: Network error")
+    })
 })
