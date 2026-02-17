@@ -1,4 +1,4 @@
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest'
+import { describe, expect, test, vi} from 'vitest'
 import { getDogImage } from '../controllers/dogController'
 import * as dogService from "../services/dogService"
 
@@ -9,23 +9,7 @@ const mockResponse = () => {
   return res
 }
 
-//  {
-//
-//      "data": {
-//
-//-       "imageUrl": "",
-//
-//+       "imageUrl": "https://images.dog.ceo/breeds/mountain-bernese/n02107683_5112.jpg",
-//
-//        "status": "success",
-//
-//      },
-//
-//      "success": true,
-//
-//    },
-
-describe("dogController.getDogImage", () => {
+describe("dogController test", () => {
   test("Return succesful call", async () => {
     const mockData = {
       imageUrl: "https://images.dog.ceo/breeds/mountain-bernese/n02107683_5112.jpg",
@@ -39,9 +23,6 @@ describe("dogController.getDogImage", () => {
 
     await getDogImage(_req, res)
 
-    //console.log(res.status, "!!!!!!!!!!")
-
-    //expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({
       data: {
         imageUrl: "https://images.dog.ceo/breeds/mountain-bernese/n02107683_5112.jpg",
