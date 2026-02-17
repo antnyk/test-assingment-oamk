@@ -39,7 +39,7 @@ describe("dogRoutes tests", () => {
         expect(res.body.data.message).toEqual("https://images.dog.ceo/breeds/mudhol-indian/Indian-Mudhol.jpg")
     })
 
-    test.fails("Failed GET call to /api/dogs/random", async () => {
+    test("Failed GET call to /api/dogs/random", async () => {
         const jsonReturned = {
             success: false,
             error: "Failed to fetch dog image: Network error"
@@ -47,7 +47,7 @@ describe("dogRoutes tests", () => {
 
         vi.mocked(dogController.getDogImage).mockImplementation(
             async (_req, res) => {
-                res.status(200).json(jsonReturned)
+                res.status(500).json(jsonReturned)
             }
         )
 

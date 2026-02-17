@@ -1,9 +1,18 @@
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest'
 import { getRandomDogImage } from '../services/dogService'
 
 describe("dogService.ts tests", () => {
-  test("succesful return of results", async ()=>{
 
+  beforeEach(() => {
+    global.fetch = vi.fn()
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+    vi.resetAllMocks()
+  })
+
+  test("succesful return of results", async ()=>{
     const jsonResponse = {
       message: "https://images.dog.ceo/breeds/mudhol-indian/Indian-Mudhol.jpg",
       status: "success"
@@ -24,19 +33,12 @@ describe("dogService.ts tests", () => {
     )
   })
 
-  test.fails("fail to call API", async ()=> {
-    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
-      ok: true,
+  test("fail to call API", async ()=> {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: false,
       status: 500
     } as Response)
 
-    const result = await getRandomDogImage()
-    console.log(result)
-
-    expect(fetchSpy).toHaveBeenCalledExactlyOnceWith("https://dog.ceo/api/breeds/image/random")
-    expect(result).toEqual({
-      ok: "false",
-      status: 500
-    })
+    await expect(getRandomDogImage()).rejects.toThrow("Failed to fetch dog image: Dog API returned status 500")
   })
 })
