@@ -17,10 +17,10 @@ describe("dogRoutes tests", () => {
     test("GET call to /api/dogs/random", async () => {
         const jsonReturned = {
             success: true,
-                data: {
-                    message: "https://images.dog.ceo/breeds/mudhol-indian/Indian-Mudhol.jpg",
-                    status: "success"
-                }
+            data: {
+                message: "https://images.dog.ceo/breeds/mudhol-indian/Indian-Mudhol.jpg",
+                status: "success"
+            }
         }
 
         vi.mocked(dogController.getDogImage).mockImplementation(
