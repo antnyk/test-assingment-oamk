@@ -20,13 +20,13 @@ function App() {
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
       const response = await fetch(`${backendUrl}/api/dogs/random`)
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch dog image')
       }
-      
+
       const data: DogResponse = await response.json()
-      
+
       if (data.success && data.data.imageUrl) {
         setDogImage(data.data.imageUrl)
       } else {
@@ -47,24 +47,24 @@ function App() {
   return (
     <div className="app-container">
       <h1>🐕 Random Dog Image</h1>
-      
+
       <div className="content">
         {loading && <p className="loading">Loading...</p>}
-        
+
         {error && (
           <div className="error">
             <p>Error: {error}</p>
-            <p className="hint">Make sure the server is running on http://localhost:5000</p>
+            <p className="hint">Make sure the server is running on http://localhost:5001</p>
           </div>
         )}
-        
+
         {dogImage && (
           <div className="dog-container">
             <img src={dogImage} alt="Random dog" className="dog-image" />
           </div>
         )}
       </div>
-      
+
       <button onClick={fetchDogImage} disabled={loading} className="fetch-button">
         {loading ? 'Loading...' : 'Get Another Dog'}
       </button>
