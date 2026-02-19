@@ -20,10 +20,8 @@ describe("dogApi", () => {
         const response = await request(app)
             .get("/api/dogs/invalid")
 
-        //console.log(response.error)
-
         expect(response.status).toBe(404) // returned HTTP status is 404
         expect(response.body).toHaveProperty('error') // returned response contains error message
-        // implement this -> verify that returned error message is correct (check implementation for valid error message)
+        expect(response.body.error).toEqual("Route not found") // verify that returned error message is correct (check implementation for valid error message)
     })
 })
